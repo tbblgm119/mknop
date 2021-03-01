@@ -5,14 +5,17 @@ cd lede
 (
     cd package
     git clone https://github.com/tuanqing/install-program
-    # git clone https://github.com/tuanqing/openwrt-mentohust
-    # git clone https://github.com/tuanqing/luci-app-mentohust
-    # git clone https://github.com/jerrykuku/luci-app-jd-dailybonus
-    # git clone https://github.com/jerrykuku/luci-app-ttnode
+    git clone https://github.com/tuanqing/openwrt-mentohust
+    git clone https://github.com/tuanqing/luci-app-mentohust
+    git clone https://github.com/jerrykuku/luci-app-jd-dailybonus
+    git clone https://github.com/jerrykuku/luci-app-ttnode
     git clone https://github.com/jerrykuku/luci-theme-argon -b 18.06
     git clone https://github.com/jerrykuku/luci-app-argon-config
     git clone https://github.com/lisaac/luci-lib-docker
     git clone https://github.com/lisaac/luci-app-dockerman
+    git clone https://github.com/sirpdboy/luci-theme-opentoks.git
+    git clone https://github.com/sirpdboy/luci-theme-opentopd.git
+    git clone https://github.com/linkease/ddnsto-openwrt.git
 
     sed -i 's/+docker-ce/+docker +dockerd/' luci-app-dockerman/applications/luci-app-dockerman/Makefile
 
@@ -30,6 +33,7 @@ src-git packages https://github.com/Lienol/openwrt-packages.git;main
 src-git routing https://git.openwrt.org/feed/routing.git
 src-git telephony https://git.openwrt.org/feed/telephony.git
 src-git helloworld https://github.com/fw876/helloworld.git
+src-git packages https://github.com/tbblgm119/sirpdboy-package.git
 EOF
 
 ./scripts/feeds update -a
@@ -70,7 +74,7 @@ sed -i '/PKG_SOURCE_VERSION:=/d' package/lean/shadowsocksr-libev/Makefile
 sed -i '/PKG_SOURCE_URL/a PKG_SOURCE_VERSION:=4799b312b8244ec067b8ae9ba4b85c877858976c' \
     package/lean/shadowsocksr-libev/Makefile
 
-# sed -i 's/ipaddr:-"192.168.1.1"/ipaddr:-"192.168.1.10"/' package/base-files/files/bin/config_generate
+sed -i 's/ipaddr:-"192.168.1.1"/ipaddr:-"192.168.1.10"/' package/base-files/files/bin/config_generate
 
 cat >.config <<-EOF
 ## target
@@ -83,17 +87,20 @@ CONFIG_PACKAGE_luci-app-aria2=y
 CONFIG_PACKAGE_luci-app-cifs-mount=y
 CONFIG_PACKAGE_luci-app-samba4=y
 CONFIG_PACKAGE_luci-app-ttyd=y
-# CONFIG_PACKAGE_luci-app-mentohust=y
-# CONFIG_PACKAGE_luci-app-jd-dailybonus=y
-# CONFIG_PACKAGE_luci-app-ttnode=y
+CONFIG_PACKAGE_luci-app-mentohust=y
+CONFIG_PACKAGE_luci-app-jd-dailybonus=y
+CONFIG_PACKAGE_luci-app-ttnode=y
 CONFIG_PACKAGE_luci-app-dockerman=y
 CONFIG_PACKAGE_luci-app-argon-config=y
+CONFIG_PACKAGE_luci-app-ddnsto=y
 ## luci theme
 CONFIG_PACKAGE_luci-theme-bootstrap-mod=y
 CONFIG_PACKAGE_luci-theme-argon=y
+CONFIG_PACKAGE_luci-theme-opentoks=y
+CONFIG_PACKAGE_luci-theme-opentopd=y
 ## remove
-# CONFIG_UnblockNeteaseMusic_NodeJS is not set
-# CONFIG_PACKAGE_luci-app-webadmin is not set
+CONFIG_UnblockNeteaseMusic_NodeJS is not set
+CONFIG_PACKAGE_luci-app-webadmin is not set
 ## others
 CONFIG_BRCMFMAC_SDIO=y
 CONFIG_LUCI_LANG_en=y
